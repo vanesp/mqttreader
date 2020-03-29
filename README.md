@@ -30,7 +30,23 @@ the raw values.
 
 As produced by my own script scrape_weather.php
 
-domoticz/in {"idx":3,"nvalue":0,"svalue":"18.8"}
+```Sensor: weather
+Values:
+inTemp
+inHumi
+outTemp
+outHumi
+RelPress
+rainofdaily
+winddir
+avgwind
+gustspeed
+windchill
+UV
+solarrad
+```
+
+```domoticz/in {"idx":3,"nvalue":0,"svalue":"18.8"}
 Indoor temperature bedroom in C
 domoticz/in {"idx":4,"nvalue":0,"svalue":"6.7"}
 Outdoor temperature in C
@@ -56,10 +72,11 @@ UV value
 
 domoticz/in {"idx":11,"svalue":"26997.40"}
 Light in Lux
+```
 
 ### Weather data as processed in Domoticz
 
-domoticz/out {
+```domoticz/out {
 	"Battery" : 255,
 	"RSSI" : 12,
 	"description" : "",
@@ -201,11 +218,11 @@ domoticz/out {
 	"svalue1" : "26997.40",
 	"unit" : 1
 }
-
+```
 
 ### OpenTherm MQTT Messages
 
-events/central_heating/otmonitor/boilerwatertemperature {"name": "temp", "type": "float", "value": 31.00, "timestamp": 1585473884443}
+```events/central_heating/otmonitor/boilerwatertemperature {"name": "temp", "type": "float", "value": 31.00, "timestamp": 1585473884443}
 events/central_heating/otmonitor/controlsetpoint {"name": "temp", "type": "float", "value": 10.00, "timestamp": 1585468255942}
 events/central_heating/otmonitor/chenable {"name": "on", "type": "boolean", "value": false, "timestamp": 1585468255946}
 events/central_heating/otmonitor/dhwenable {"name": "on", "type": "boolean", "value": true, "timestamp": 1584976461571}
@@ -217,9 +234,11 @@ events/central_heating/otmonitor/roomtemperature {"name": "temp", "type": "float
 events/central_heating/otmonitor/setpoint {"name": "temp", "type": "float", "value": 15.00, "timestamp": 1585468260376}
 events/central_heating/otmonitor/chsetpoint {"name": "temp", "type": "float", "value": 72.00, "timestamp": 1584976462638}
 events/central_heating/otmonitor/thermostat {"name": "connected", "type": "boolean", "value": true, "timestamp": 1544392123320}
+```
 
 ### Domoticz data structure P1 Meter
-domoticz/out {
+
+```domoticz/out {
 	"Battery" : 255,
 	"RSSI" : 12,
 	"description" : "",
@@ -242,10 +261,11 @@ domoticz/out {
 svalue1 = day cumulative current kwh
 svalue2 = night cumulative current kwh
 svalue5 = instantaneous power used
+```
 
 ### Gas
 
-domoticz/out {
+```domoticz/out {
 	"Battery" : 255,
 	"RSSI" : 12,
 	"description" : "",
@@ -261,12 +281,7 @@ domoticz/out {
 }
 
 svalue1 = Gas volume x 1000 m3 (i.e. 11376.913 m3)
-
-
-
-
-
-
+```
 
 ## Translation to InfluxDB data structure ##
 
@@ -313,6 +328,20 @@ An example translation for a complex measurement:
 
 The data stored in InfluxDB via this forwarder are easily visualized with [Grafana](http://grafana.org/)
 
-## License ##
+## Prerequisites ##
+
+Installation can be done with composer:
+
+    $ composer require influxdb/influxdb-php
 
 ## Versioning ##
+
+## Installation ##
+
+Copy file ```rcvinflux.service``` to directory ```/etc/systemd/system/rcvinflux.service```.
+
+To start the server used
+    sudo systemctl start rcvinflux
+
+To enable it at boot time
+    sudo systemctl enable rcvinflux

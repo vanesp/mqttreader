@@ -1,0 +1,13 @@
+[Unit]
+Description=rcvinflux
+After=syslog.target network.target
+Requires=
+
+[Service]
+ExecStart=/usr/bin/php /home/vanesp/mqttreader/rcvinflux.php
+ExecReload=/bin/kill -HUP $MAINPID
+StandardOutput=null
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
