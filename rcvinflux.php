@@ -132,6 +132,25 @@ function handle_power($msg) {
 		// var_dump ($points);
 		// we are writing unix timestamps, which have a second precision
 		$result = $database->writePoints($points, Database::PRECISION_SECONDS);
+	} elseif (strpos($arr["name"],"Gas") !== false) {
+		// var_dump($arr);
+		sscanf ($arr["svalue1"], "%d", $value1);
+		$timestamp = time();
+
+		// create an array of points
+		$points = array(
+			new Point(
+				'gas', // name of the measurement
+				(double) $value1/1000, // the measurement value
+				[],
+				[],
+				$timestamp // Time precision has to be set to seconds!
+			)
+		);
+
+		// var_dump ($points);
+		// we are writing unix timestamps, which have a second precision
+		$result = $database->writePoints($points, Database::PRECISION_SECONDS);
 	}
 }
 
